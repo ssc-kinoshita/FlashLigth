@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">01Ligth</string>
+
+    <string name="white">白</string>
+    <string name="red">赤</string>
+    <string name="green">緑</string>
+    <string name="blue">青</string>
+</resources>
