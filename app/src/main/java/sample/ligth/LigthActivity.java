@@ -17,9 +17,45 @@ public class LigthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ligth);
         View view = findViewById(R.id.layout);
         view.setBackgroundColor(Color.WHITE);
-        int i = 1;
-        Log.d("デバッグ", "変数iは" + i);
+        //int i = 1;
+        //Log.d("デバッグ", "変数iは" + i);
+        Log.v("LifeCycle", "onCreate");
 
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        Log.v("LifeCycle", "onStart");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.v("LifeCycle", "onResume");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.v("LifeCycle", "onPause");
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        Log.v("LifeCycle", "onRestart");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.v("LifeCycle", "onStop");
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.v("LifeCycle", "onDestroy");
     }
 
     @Override
