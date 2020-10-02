@@ -13,6 +13,7 @@ import android.widget.Button;
 public class LightActivity extends AppCompatActivity {
 
     static final int RESULT_COLORSELECTACTIVITY = 1000;
+    private static final String TAG = "LightActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +70,11 @@ public class LightActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent intent) {
-        Log.d("LightActivity","onActivityResult呼び出し");
+        Log.d(TAG,"onActivityResult呼び出し");
         super.onActivityResult(requestCode, resultCode, intent);
         if(resultCode == RESULT_OK && requestCode == RESULT_COLORSELECTACTIVITY){
             int res = intent.getIntExtra("Color", 0);
-            Log.d("LightActivity", "変数resは" + res);
+            Log.d(TAG, "変数resは" + res);
             View view = findViewById(R.id.layout);
             switch (res){
                 case R.id.red:
