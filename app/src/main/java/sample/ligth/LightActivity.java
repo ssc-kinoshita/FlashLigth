@@ -4,40 +4,33 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class LigthActivity extends AppCompatActivity {
+public class LightActivity extends AppCompatActivity {
 
-    static final int RESULT_SUBACTIVITY = 1000;
+    static final int RESULT_COLORSELECTACTIVITY = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.v("LifeCycle", "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ligth);
+        setContentView(R.layout.activity_light);
         View view = findViewById(R.id.layout);
         view.setBackgroundColor(Color.WHITE);
-        //int i = 1;
-        //Log.d("デバッグ", "変数iは" + i);
-        Log.v("LifeCycle", "onCreate");
-
-        Button button = findViewById(R.id.setting);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button settingButton = findViewById(R.id.settingButton);
+        settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), ColorSelectActivity.class);
-                int requestCode = 1000;
-                startActivityForResult(intent, requestCode);
+                Intent intent = new Intent(LightActivity.this, ColorSelectActivity.class);
+                startActivityForResult(intent, RESULT_COLORSELECTACTIVITY);
             }
         });
-
-
-
-
-
     }
+
     @Override
     public void onStart(){
         super.onStart();
@@ -74,16 +67,13 @@ public class LigthActivity extends AppCompatActivity {
         Log.v("LifeCycle", "onDestroy");
     }
 
-
-
-
     @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent intent) {
+        Log.d("LightActivity","onActivityResult呼び出し");
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.d("test01","test01");
-        if(resultCode == RESULT_OK && requestCode == RESULT_SUBACTIVITY){
+        if(resultCode == RESULT_OK && requestCode == RESULT_COLORSELECTACTIVITY){
             int res = intent.getIntExtra("Color", 0);
-            Log.d("test02", "変数resは" + res);
+            Log.d("LightActivity", "変数resは" + res);
             View view = findViewById(R.id.layout);
             switch (res){
                 case R.id.red:
@@ -108,32 +98,5 @@ public class LigthActivity extends AppCompatActivity {
 
             }
         }
-
     }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item){
-//
-//        View view = findViewById(R.id.layout);
-//        switch (item.getItemId()){
-//            case R.id.red:
-//                view.setBackgroundColor(Color.RED);
-//                Log.d("red", "赤点灯" );
-//                return true;
-//            case R.id.green:
-//                view.setBackgroundColor(Color.GREEN);
-//                Log.d("green", "緑点灯" );
-//                return true;
-//            case R.id.blue:
-//                view.setBackgroundColor(Color.BLUE);
-//                Log.d("blue", "青点灯" );
-//                return true;
-//            case R.id.white:
-//                view.setBackgroundColor(Color.WHITE);
-//                Log.d("white", "白点灯" );
-//                return true;
-//        }
-//        return false;
-//    }
 }

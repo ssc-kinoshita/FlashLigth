@@ -15,8 +15,8 @@ public class ColorSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorselect);
 
-        Button BlueButton = findViewById(R.id.BlueButton);
-        BlueButton.setOnClickListener(new View.OnClickListener() {
+        Button blueButton = findViewById(R.id.BlueButton);
+        blueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -27,8 +27,8 @@ public class ColorSelectActivity extends AppCompatActivity {
             }
        });
 
-        Button RedButton = findViewById(R.id.RedButton);
-        RedButton.setOnClickListener(new View.OnClickListener() {
+        Button redButton = findViewById(R.id.RedButton);
+        redButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -38,8 +38,8 @@ public class ColorSelectActivity extends AppCompatActivity {
             }
         });
 
-        Button GreenButton = findViewById(R.id.GreenButton);
-        GreenButton.setOnClickListener(new View.OnClickListener() {
+        Button greenButton = findViewById(R.id.GreenButton);
+        greenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -49,8 +49,8 @@ public class ColorSelectActivity extends AppCompatActivity {
             }
         });
 
-        Button WhiteButton = findViewById(R.id.WhiteButton);
-        WhiteButton.setOnClickListener(new View.OnClickListener() {
+        Button whiteButton = findViewById(R.id.WhiteButton);
+        whiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -59,20 +59,5 @@ public class ColorSelectActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        //Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.ligth,menu);
-        return true;
-
-
-    }
-
-
-
-
 }

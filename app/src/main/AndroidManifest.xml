@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ColorSelectActivity"></activity>
-        <activity android:name=".LigthActivity">
+        <activity android:name=".LightActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
