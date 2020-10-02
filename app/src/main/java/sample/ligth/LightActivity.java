@@ -79,22 +79,22 @@ public class LightActivity extends AppCompatActivity {
             switch (res){
                 case R.id.red:
                     view.setBackgroundColor(Color.RED);
-                    Log.d("red", "赤点灯" );
+                    Log.d(TAG, "赤点灯" );
                     break;
 
                 case R.id.green:
                     view.setBackgroundColor(Color.GREEN);
-                    Log.d("green", "緑点灯" );
+                    Log.d(TAG, "緑点灯" );
                     break;
 
                 case R.id.blue:
                     view.setBackgroundColor(Color.BLUE);
-                    Log.d("blue", "青点灯" );
+                    Log.d(TAG, "青点灯" );
                     break;
 
                 case R.id.white:
                     view.setBackgroundColor(Color.WHITE);
-                    Log.d("white", "白点灯" );
+                    Log.d(TAG, "白点灯" );
                     break;
 
             }
