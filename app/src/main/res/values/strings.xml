@@ -5,4 +5,6 @@
     <string name="red">赤</string>
     <string name="green">緑</string>
     <string name="blue">青</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
