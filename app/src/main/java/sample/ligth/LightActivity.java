@@ -18,7 +18,7 @@ public class LightActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.v("LifeCycle", "onCreate");
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_light);
     }
@@ -26,36 +26,36 @@ public class LightActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        Log.v(TAG, "onStart");
+        Log.d(TAG, "onStart");
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        Log.v(TAG, "onResume");
+        Log.d(TAG, "onResume");
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        Log.v(TAG, "onPause");
+        Log.d(TAG, "onPause");
     }
 
     @Override
     public void onRestart(){
         super.onRestart();
-        Log.v(TAG, "onRestart");
+        Log.d(TAG, "onRestart");
     }
 
     @Override
     public void onStop(){
         super.onStop();
-        Log.v(TAG, "onStop");
+        Log.d(TAG, "onStop");
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        Log.v(TAG, "onDestroy");
+        Log.d(TAG, "onDestroy");
     }
 }
