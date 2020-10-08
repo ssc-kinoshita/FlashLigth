@@ -37,8 +37,6 @@ public class ColorSelectFragment extends Fragment {
         intent.putExtra("Color", color);
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
-
-
     }
 
     @Override
