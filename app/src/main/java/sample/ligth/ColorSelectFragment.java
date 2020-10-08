@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,15 @@ public class ColorSelectFragment extends Fragment {
 
     }
 
+    public void getData(int color){
+        Intent intent = new Intent();
+        intent.putExtra("Color", color);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
+
+
+    }
+
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container,
@@ -46,10 +56,7 @@ public class ColorSelectFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "青ボタン押下");
 
-                Intent intent = new Intent();
-                intent.putExtra("Color", R.id.blue);
-                getActivity().setResult(Activity.RESULT_OK, intent);
-                getActivity().finish();
+                getData(Color.BLUE);
             }
         });
 
@@ -59,11 +66,7 @@ public class ColorSelectFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "赤ボタン押下");
 
-                Intent intent = new Intent();
-                intent.putExtra("Color", R.id.red);
-                getActivity().setResult(RESULT_OK, intent);
-                getActivity().finish();
-
+                getData(Color.RED);
             }
         });
 
@@ -72,10 +75,8 @@ public class ColorSelectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "緑ボタン押下");
-                Intent intent = new Intent();
-                intent.putExtra("Color", R.id.green);
-                getActivity().setResult(RESULT_OK, intent);
-                getActivity().finish();
+
+                getData(Color.GREEN);
             }
         });
 
@@ -84,10 +85,8 @@ public class ColorSelectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "白ボタン押下");
-                Intent intent = new Intent();
-                intent.putExtra("Color", R.id.white);
-                getActivity().setResult(RESULT_OK, intent);
-                getActivity().finish();
+//                
+                getData(Color.WHITE);
             }
         });
         return view;

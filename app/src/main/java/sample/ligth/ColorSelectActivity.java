@@ -14,7 +14,6 @@ public class ColorSelectActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colorselect);
-
     }
 
     @Override

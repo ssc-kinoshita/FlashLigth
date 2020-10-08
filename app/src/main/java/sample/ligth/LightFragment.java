@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ public class LightFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-
     }
 
     @Override
@@ -96,38 +94,14 @@ public class LightFragment extends Fragment {
         super.onDetach();
         Log.d(TAG,"onDetach");
     }
-        @Override
+    @Override
     public void onActivityResult( int requestCode, int resultCode, Intent intent) {
         Log.d(TAG,"onActivityResult呼び出し");
         super.onActivityResult(requestCode, resultCode, intent);
         if(resultCode == Activity.RESULT_OK && requestCode == RESULT_COLORSELECTACTIVITY){
-            int res = intent.getIntExtra("Color", 0);
-            Log.d(TAG, "変数resは" + res);
 
             View view = getActivity().findViewById(R.id.fragment);
-
-            switch (res){
-                case R.id.red:
-                    view.setBackgroundColor(Color.RED);
-                    Log.d(TAG, "赤点灯" );
-                    break;
-
-                case R.id.green:
-                    view.setBackgroundColor(Color.GREEN);
-                    Log.d(TAG, "緑点灯" );
-                    break;
-
-                case R.id.blue:
-                    view.setBackgroundColor(Color.BLUE);
-                    Log.d(TAG, "青点灯" );
-                    break;
-
-                case R.id.white:
-                    view.setBackgroundColor(Color.WHITE);
-                    Log.d(TAG, "白点灯" );
-                    break;
-
-            }
+            view.setBackgroundColor(intent.getIntExtra("Color", 0));
         }
     }
 }
