@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.os.Bundle;
 import android.widget.Button;
 import android.content.SharedPreferences.Editor;
+import android.widget.Toast;
 
 public class LightFragment extends Fragment {
 
@@ -54,6 +55,9 @@ public class LightFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ColorSelectActivity.class);
                 startActivityForResult(intent, RESULT_COLORSELECTACTIVITY);
                 Log.d(TAG, "startActivityForResult呼び出し");
+
+                Context context = getContext().getApplicationContext();
+                Toast.makeText(context , "設定ボタン押下", Toast.LENGTH_LONG).show();
             }
         });
 
