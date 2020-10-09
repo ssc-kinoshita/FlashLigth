@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import static android.app.Activity.RESULT_OK;
+
 
 public class ColorSelectFragment extends Fragment {
 
@@ -29,10 +29,9 @@ public class ColorSelectFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-
     }
 
-    public void getData(int color){
+    private void setActivityResult(int color) {
         Intent intent = new Intent();
         intent.putExtra("Color", color);
         getActivity().setResult(Activity.RESULT_OK, intent);
@@ -54,7 +53,7 @@ public class ColorSelectFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "青ボタン押下");
 
-                getData(Color.BLUE);
+                setActivityResult(Color.BLUE);
             }
         });
 
@@ -64,7 +63,7 @@ public class ColorSelectFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "赤ボタン押下");
 
-                getData(Color.RED);
+                setActivityResult(Color.RED);
             }
         });
 
@@ -74,7 +73,7 @@ public class ColorSelectFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "緑ボタン押下");
 
-                getData(Color.GREEN);
+                setActivityResult(Color.GREEN);
             }
         });
 
@@ -84,7 +83,7 @@ public class ColorSelectFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "白ボタン押下");
 //                
-                getData(Color.WHITE);
+                setActivityResult(Color.WHITE);
             }
         });
         return view;

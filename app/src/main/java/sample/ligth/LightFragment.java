@@ -3,18 +3,25 @@ package sample.ligth;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
 import android.widget.Button;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class LightFragment extends Fragment {
 
     static final int RESULT_COLORSELECTACTIVITY = 1000;
     private static final String TAG = "LightFragment";
+    private SharedPreferences sharedPreferences;
+    private Editor editor;
 
     @Override
     public void onAttach(Activity act){
@@ -33,6 +40,21 @@ public class LightFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.light_fragment, container, false);
+
+        sharedPreferences = getActivity().getSharedPreferences("LightFragment", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        if(sharedPreferences.getBoolean("LightFragment", false) == false){
+            //初回起動時
+            view.setBackgroundColor(Color.WHITE);
+            editor.putBoolean("LightFragment", true);
+            editor.commit();
+        }else{
+            //二回目以降
+            sharedPreferences = getActivity().getSharedPreferences("LightFragment", Context.MODE_PRIVATE);
+            int colorData = sharedPreferences.getInt("Color", 0);
+            view.setBackgroundColor(colorData);
+        }
+
         Button settingButton = view.findViewById(R.id.settingButton);
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +124,12 @@ public class LightFragment extends Fragment {
 
             View view = getActivity().findViewById(R.id.fragment);
             view.setBackgroundColor(intent.getIntExtra("Color", 0));
+
+            sharedPreferences = getActivity().getSharedPreferences("LightFragment", Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+
+            editor.putInt("Color", intent.getIntExtra("Color", 0));
+            editor.commit();
         }
     }
 }
