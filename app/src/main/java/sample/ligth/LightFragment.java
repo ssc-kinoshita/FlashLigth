@@ -13,14 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
 import android.widget.Button;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class LightFragment extends Fragment {
 
     static final int RESULT_COLORSELECTACTIVITY = 1000;
     private static final String TAG = "LightFragment";
-    private static final String destinationFile = "LightFragment";
+    private static final String SAVE_PREFERENCE_FILE = "LightFragment";
+    private static final String COLOR_KEY = "Color";
 
 
     @Override
@@ -41,15 +41,15 @@ public class LightFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.light_fragment, container, false);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(destinationFile, Context.MODE_PRIVATE);
-        Editor editor = sharedPreferences.edit();
-
-        int colorData = sharedPreferences.getInt("Color", Color.WHITE);
+        //前回設定した背景色を読み込み
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SAVE_PREFERENCE_FILE, Context.MODE_PRIVATE);
+        int colorData = sharedPreferences.getInt(COLOR_KEY, Color.WHITE);
         view.setBackgroundColor(colorData);
 
         Button settingButton = view.findViewById(R.id.settingButton);
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            //LightFragmentからColorSelectFragmentに画面遷移
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ColorSelectActivity.class);
                 startActivityForResult(intent, RESULT_COLORSELECTACTIVITY);
@@ -113,16 +113,16 @@ public class LightFragment extends Fragment {
         Log.d(TAG,"onActivityResult呼び出し");
         super.onActivityResult(requestCode, resultCode, intent);
         if(resultCode == Activity.RESULT_OK && requestCode == RESULT_COLORSELECTACTIVITY){
-
+            //ColorSelectFragmentからの背景色を受け取る
             View view = getActivity().findViewById(R.id.fragment);
-            view.setBackgroundColor(intent.getIntExtra("Color", 0));
+            int setColor = intent.getIntExtra(COLOR_KEY, 0);
+            view.setBackgroundColor(setColor);
 
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(destinationFile, Context.MODE_PRIVATE);
+            //背景色をプリファレンスに保存する
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SAVE_PREFERENCE_FILE, Context.MODE_PRIVATE);
             Editor editor = sharedPreferences.edit();
-
-            editor.putInt("Color", intent.getIntExtra("Color", 0));
+            editor.putInt(COLOR_KEY, setColor);
             editor.apply();
         }
-
     }
 }

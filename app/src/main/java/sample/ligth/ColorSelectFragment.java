@@ -31,6 +31,7 @@ public class ColorSelectFragment extends Fragment {
         Log.d(TAG, "onCreate");
     }
 
+    //ColorSelectFragmentから戻るときに背景色を返す
     private void setActivityResult(int color) {
         Intent intent = new Intent();
         intent.putExtra("Color", color);
