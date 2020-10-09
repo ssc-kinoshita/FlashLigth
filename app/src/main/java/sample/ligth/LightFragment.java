@@ -20,8 +20,8 @@ public class LightFragment extends Fragment {
 
     static final int RESULT_COLORSELECTACTIVITY = 1000;
     private static final String TAG = "LightFragment";
-    private SharedPreferences sharedPreferences;
-    private Editor editor;
+    private static final String destinationFile = "LightFragment";
+
 
     @Override
     public void onAttach(Activity act){
@@ -41,19 +41,11 @@ public class LightFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.light_fragment, container, false);
 
-        sharedPreferences = getActivity().getSharedPreferences("LightFragment", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        if(sharedPreferences.getBoolean("LightFragment", false) == false){
-            //初回起動時
-            view.setBackgroundColor(Color.WHITE);
-            editor.putBoolean("LightFragment", true);
-            editor.commit();
-        }else{
-            //二回目以降
-            sharedPreferences = getActivity().getSharedPreferences("LightFragment", Context.MODE_PRIVATE);
-            int colorData = sharedPreferences.getInt("Color", 0);
-            view.setBackgroundColor(colorData);
-        }
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(destinationFile, Context.MODE_PRIVATE);
+        Editor editor = sharedPreferences.edit();
+
+        int colorData = sharedPreferences.getInt("Color", Color.WHITE);
+        view.setBackgroundColor(colorData);
 
         Button settingButton = view.findViewById(R.id.settingButton);
         settingButton.setOnClickListener(new View.OnClickListener() {
@@ -125,11 +117,12 @@ public class LightFragment extends Fragment {
             View view = getActivity().findViewById(R.id.fragment);
             view.setBackgroundColor(intent.getIntExtra("Color", 0));
 
-            sharedPreferences = getActivity().getSharedPreferences("LightFragment", Context.MODE_PRIVATE);
-            editor = sharedPreferences.edit();
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(destinationFile, Context.MODE_PRIVATE);
+            Editor editor = sharedPreferences.edit();
 
             editor.putInt("Color", intent.getIntExtra("Color", 0));
-            editor.commit();
+            editor.apply();
         }
+
     }
 }
