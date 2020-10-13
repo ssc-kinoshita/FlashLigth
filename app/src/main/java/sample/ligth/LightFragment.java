@@ -61,6 +61,26 @@ public class LightFragment extends Fragment {
             }
         });
 
+        Button startButton = view.findViewById(R.id.startbutton);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //serviceの起動
+                Intent intent = new Intent(getActivity(), LightService.class);
+                getActivity().startService(intent);
+            }
+        });
+
+        Button stopButton = view.findViewById(R.id.stopbutton);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //serviceの停止
+                Intent intent = new Intent(getActivity(), LightService.class);
+                getActivity().stopService(intent);
+            }
+        });
+
         return view;
     }
 
