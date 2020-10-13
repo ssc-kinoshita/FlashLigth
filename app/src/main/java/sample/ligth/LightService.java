@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class LightService extends Service {
 
     private static final String TAG = "LightService";
-    private final int INTERVAL_PERIOD = 3000;
+    private static final int INTERVAL_PERIOD = 3000;
     private final Handler mHandler = new Handler(Looper.myLooper());
     private final MyRunnable mRunnable = new MyRunnable();
 
@@ -48,7 +48,9 @@ public class LightService extends Service {
         mHandler.removeCallbacks(mRunnable);
     }
 
-    //toastを3秒ごとに表示する
+    /**
+     * toastを3秒ごとに表示する
+     */
     private class MyRunnable implements Runnable {
         @Override
         public void run() {
