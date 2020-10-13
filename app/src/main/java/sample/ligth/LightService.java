@@ -15,10 +15,9 @@ import android.widget.Toast;
 public class LightService extends Service {
 
     private static final String TAG = "LightService";
-    final int INTERVAL_PERIOD = 3000;
-    final Handler handler = new Handler(Looper.myLooper());
-    MyRunnable runnable = new MyRunnable();
-
+    private final int INTERVAL_PERIOD = 3000;
+    private final Handler mHandler = new Handler(Looper.myLooper());
+    private final MyRunnable mRunnable = new MyRunnable();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,21 +31,11 @@ public class LightService extends Service {
         Log.d(TAG, "onCreate");
     }
 
-    //toastを3秒ごとに表示する
-    class MyRunnable implements Runnable {
-        @Override
-        public void run() {
-            Context context = getApplicationContext();
-            Toast.makeText(context , "toast", Toast.LENGTH_SHORT).show();
-            handler.postDelayed(this,INTERVAL_PERIOD);
-        }
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand");
-        //別スレッドでアクセス
-        handler.post(runnable);
+        //別スレッドでtoastを表示
+        mHandler.post(mRunnable);
 
         return START_STICKY;
     }
@@ -56,6 +45,16 @@ public class LightService extends Service {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
         //toastの表示を終了する
-        handler.removeCallbacks(runnable);
+        mHandler.removeCallbacks(mRunnable);
+    }
+
+    //toastを3秒ごとに表示する
+    private class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            Context context = getApplicationContext();
+            Toast.makeText(context , "toast", Toast.LENGTH_SHORT).show();
+            mHandler.postDelayed(this,INTERVAL_PERIOD);
+        }
     }
 }
