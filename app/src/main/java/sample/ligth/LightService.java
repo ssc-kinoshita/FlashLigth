@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class LightService extends Service {
 
     private static final String TAG = "LightService";
-    final int INTERVAL_PERIOD = 5000;
+    final int INTERVAL_PERIOD = 3000;
     final Handler handler = new Handler(Looper.myLooper());
     MyRunnable runnable = new MyRunnable();
 
@@ -25,7 +25,7 @@ public class LightService extends Service {
         public void run() {
             Context context = getApplicationContext();
             Toast.makeText(context , "toast", Toast.LENGTH_SHORT).show();
-            handler.postDelayed(this,3000);
+            handler.postDelayed(this,INTERVAL_PERIOD);
         }
     }
 
