@@ -19,15 +19,6 @@ public class LightService extends Service {
     final Handler handler = new Handler(Looper.myLooper());
     MyRunnable runnable = new MyRunnable();
 
-    //toastを3秒ごとに表示する
-    class MyRunnable implements Runnable {
-        @Override
-        public void run() {
-            Context context = getApplicationContext();
-            Toast.makeText(context , "toast", Toast.LENGTH_SHORT).show();
-            handler.postDelayed(this,INTERVAL_PERIOD);
-        }
-    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -39,6 +30,16 @@ public class LightService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate");
+    }
+
+    //toastを3秒ごとに表示する
+    class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            Context context = getApplicationContext();
+            Toast.makeText(context , "toast", Toast.LENGTH_SHORT).show();
+            handler.postDelayed(this,INTERVAL_PERIOD);
+        }
     }
 
     @Override
