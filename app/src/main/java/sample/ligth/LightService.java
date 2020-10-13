@@ -44,7 +44,7 @@ public class LightService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand");
-
+        //別スレッドでアクセス
         handler.post(runnable);
 
         return START_STICKY;

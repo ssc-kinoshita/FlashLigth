@@ -61,6 +61,7 @@ public class LightFragment extends Fragment {
             }
         });
 
+        //toast表示
         Button startButton = view.findViewById(R.id.startbutton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +72,7 @@ public class LightFragment extends Fragment {
             }
         });
 
+        //toast停止
         Button stopButton = view.findViewById(R.id.stopbutton);
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
