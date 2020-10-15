@@ -3,10 +3,13 @@ package sample.ligth;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +19,27 @@ import android.widget.Button;
 import android.content.SharedPreferences.Editor;
 import android.widget.Toast;
 
-public class LightFragment extends Fragment {
+public class LightFragment<BindService> extends Fragment {
 
     static final int RESULT_COLORSELECTACTIVITY = 1000;
     private static final String TAG = "LightFragment";
     private static final String SAVE_PREFERENCE_FILE = "LightFragment";
     private static final String COLOR_KEY = "Color";
+    LightService mBindService;
 
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // Serviceとの接続確立時に呼び出される。
+            // service引数には、Onbind()で返却したBinderが渡される
+            mBindService = ((LightService.LocalBinder)service).getService();
+            //必要であればmBoundServiceを使ってバインドしたServiceへの制御を行う
+        }
+        public void onServiceDisconnected(ComponentName className) {
+            // Serviceとの切断時に呼び出される。
+            mBindService = null;
+        }
+    };
 
     @Override
     public void onAttach(Activity act){
@@ -58,6 +75,7 @@ public class LightFragment extends Fragment {
 
                 Context context = getContext().getApplicationContext();
                 Toast.makeText(context , "設定ボタン押下", Toast.LENGTH_LONG).show();
+                mBindService.abc();
             }
         });
 
@@ -66,10 +84,14 @@ public class LightFragment extends Fragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //serviceの起動
-                Intent intent = new Intent(getActivity(), LightService.class);
-                getActivity().startService(intent);
+//                //serviceの起動
+//                Intent intent = new Intent(getActivity(), LightService.class);
+//                getActivity().startService(intent);
+                // Serviceをbindする
+                Intent i = new Intent(getActivity(), LightService.class);
+                getActivity().bindService(i, mConnection, Context.BIND_AUTO_CREATE);
             }
+
         });
 
         //toast停止
@@ -77,9 +99,12 @@ public class LightFragment extends Fragment {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //serviceの停止
-                Intent intent = new Intent(getActivity(), LightService.class);
-                getActivity().stopService(intent);
+//                //serviceの停止
+//                Intent intent = new Intent(getActivity(), LightService.class);
+//                getActivity().stopService(intent);
+
+                // Serviceをunbindする
+                getActivity().unbindService(mConnection);
             }
         });
 
