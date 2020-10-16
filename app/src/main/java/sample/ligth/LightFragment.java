@@ -27,7 +27,8 @@ public class LightFragment<BindService> extends Fragment implements LightService
     private static final String TAG = "LightFragment";
     private static final String SAVE_PREFERENCE_FILE = "LightFragment";
     private static final String COLOR_KEY = "Color";
-    LightService mBindService;
+    private static final int COLOR_TYPE_NUMBER = 4;
+    private LightService mLightService;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -35,16 +36,16 @@ public class LightFragment<BindService> extends Fragment implements LightService
             Log.d(TAG, "onServiceConnected");
             // Serviceとの接続確立時に呼び出される。
             // service引数には、Onbind()で返却したBinderが渡される
-            mBindService = ((LightService.LocalBinder) service).getService();
+            mLightService = ((LightService.LocalBinder) service).getService();
             //必要であればmBoundServiceを使ってバインドしたServiceへの制御を行う
 
             Log.d(TAG, "setCallbacks呼び出し");
-            mBindService.setCallbacks(LightFragment.this);
+            mLightService.setCallbacks(LightFragment.this);
         }
 
         public void onServiceDisconnected(ComponentName className) {
             // Serviceとの切断時に呼び出される。
-            mBindService = null;
+            mLightService = null;
         }
     };
 
@@ -82,18 +83,15 @@ public class LightFragment<BindService> extends Fragment implements LightService
 
                 Context context = getContext().getApplicationContext();
                 Toast.makeText(context, "設定ボタン押下", Toast.LENGTH_LONG).show();
-                mBindService.abc();
             }
         });
 
-        //toast表示
+        //ボタンを押すと背景色が5秒ごとに変更する
         Button startButton = view.findViewById(R.id.startbutton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                //serviceの起動
-//                Intent intent = new Intent(getActivity(), LightService.class);
-//                getActivity().startService(intent);
+//
                 // Serviceをbindする
                 Intent i = new Intent(getActivity(), LightService.class);
                 getActivity().bindService(i, mConnection, Context.BIND_AUTO_CREATE);
@@ -102,25 +100,16 @@ public class LightFragment<BindService> extends Fragment implements LightService
 
         });
 
-        //toast停止
+        //背景色の変更を停止する
         Button stopButton = view.findViewById(R.id.stopbutton);
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                //serviceの停止
-//                Intent intent = new Intent(getActivity(), LightService.class);
-//                getActivity().stopService(intent);
 
                 // Serviceをunbindする
                 getActivity().unbindService(mConnection);
             }
         });
-
-
-
-
-
-
 
         return view;
     }
@@ -192,14 +181,16 @@ public class LightFragment<BindService> extends Fragment implements LightService
         }
     }
 
-
-    public void backgroundColorChange() {
+    /**
+     * 背景色をランダムで変更
+     */
+    public void changeBackgroundColor() {
 
         Log.d(TAG, "backgroundColorChange");
 
         View view = getActivity().findViewById(R.id.fragment);
         Random random = new Random();
-        int randomValue = random.nextInt(4);
+        int randomValue = random.nextInt(COLOR_TYPE_NUMBER);
         switch (randomValue) {
             case 0:
                 view.setBackgroundColor(Color.RED);
@@ -219,6 +210,7 @@ public class LightFragment<BindService> extends Fragment implements LightService
                 break;
             default:
                 Log.d(TAG, "error");
+                break;
 
         }
     }
