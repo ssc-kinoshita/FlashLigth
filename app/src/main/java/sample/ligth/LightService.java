@@ -25,6 +25,21 @@ public class LightService extends Service {
     private final Handler mHandler = new Handler(Looper.myLooper());
     private final MyRunnable mRunnable = new MyRunnable();
 
+    public interface LightFragmentCallback{
+        public void backgroundColorChange();
+    }
+
+    private LightFragmentCallback lightFragmentCallback;
+
+    public void setCallbacks(LightFragmentCallback lightFragmentCallback){
+        Log.d(TAG, "setCallbacks");
+        this.lightFragmentCallback = lightFragmentCallback;
+
+    }
+
+
+
+
     // Serviceに接続するためのBinderクラスを実装する
     public class LocalBinder extends Binder {
         //Serviceの取得
@@ -40,6 +55,7 @@ public class LightService extends Service {
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind");
 
+        Log.d(TAG, "post呼び出し");
         mHandler.post(mRunnable);
 
         return mBinder;
@@ -89,10 +105,16 @@ public class LightService extends Service {
         @Override
         public void run() {
 
-            Context context = getApplicationContext();
-//            LayoutInflater layoutInflater = LayoutInflater.from(context);
-            Toast.makeText(context , "toast", Toast.LENGTH_SHORT).show();
+//            Context context = getApplicationContext();
+////            LayoutInflater layoutInflater = LayoutInflater.from(context);
+//            Toast.makeText(context , "toast", Toast.LENGTH_SHORT).show();
 
+//            LightFragment lightFragment = new LightFragment();
+//            lightFragment.backgroundColorChange();
+
+            if(lightFragmentCallback != null) {
+                lightFragmentCallback.backgroundColorChange();
+            }
 //            View view = layoutInflater.inflate(R.layout.light_fragment, null);
 //            Random random = new Random();
 //            int randomValue = random.nextInt(4);

@@ -19,7 +19,9 @@ import android.widget.Button;
 import android.content.SharedPreferences.Editor;
 import android.widget.Toast;
 
-public class LightFragment<BindService> extends Fragment {
+import java.util.Random;
+
+public class LightFragment<BindService> extends Fragment implements LightService.LightFragmentCallback {
 
     static final int RESULT_COLORSELECTACTIVITY = 1000;
     private static final String TAG = "LightFragment";
@@ -30,11 +32,16 @@ public class LightFragment<BindService> extends Fragment {
     private ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName className, IBinder service) {
+            Log.d(TAG, "onServiceConnected");
             // Serviceとの接続確立時に呼び出される。
             // service引数には、Onbind()で返却したBinderが渡される
-            mBindService = ((LightService.LocalBinder)service).getService();
+            mBindService = ((LightService.LocalBinder) service).getService();
             //必要であればmBoundServiceを使ってバインドしたServiceへの制御を行う
+
+            Log.d(TAG, "setCallbacks呼び出し");
+            mBindService.setCallbacks(LightFragment.this);
         }
+
         public void onServiceDisconnected(ComponentName className) {
             // Serviceとの切断時に呼び出される。
             mBindService = null;
@@ -42,9 +49,9 @@ public class LightFragment<BindService> extends Fragment {
     };
 
     @Override
-    public void onAttach(Activity act){
+    public void onAttach(Activity act) {
         super.onAttach(act);
-        Log.d(TAG,"onAttach" );
+        Log.d(TAG, "onAttach");
     }
 
     @Override
@@ -74,7 +81,7 @@ public class LightFragment<BindService> extends Fragment {
                 Log.d(TAG, "startActivityForResult呼び出し");
 
                 Context context = getContext().getApplicationContext();
-                Toast.makeText(context , "設定ボタン押下", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "設定ボタン押下", Toast.LENGTH_LONG).show();
                 mBindService.abc();
             }
         });
@@ -90,6 +97,7 @@ public class LightFragment<BindService> extends Fragment {
                 // Serviceをbindする
                 Intent i = new Intent(getActivity(), LightService.class);
                 getActivity().bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+
             }
 
         });
@@ -108,6 +116,12 @@ public class LightFragment<BindService> extends Fragment {
             }
         });
 
+
+
+
+
+
+
         return view;
     }
 
@@ -119,51 +133,52 @@ public class LightFragment<BindService> extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        Log.d(TAG,"onStart" );
+        Log.d(TAG, "onStart");
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume");
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        Log.d(TAG,"onPause");
+        Log.d(TAG, "onPause");
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
     }
 
     @Override
-    public void onDestroyView(){
+    public void onDestroyView() {
         super.onDestroyView();
-        Log.d(TAG,"onDestroyView");
+        Log.d(TAG, "onDestroyView");
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"onDestroy");
+        Log.d(TAG, "onDestroy");
     }
 
     @Override
-    public void onDetach(){
+    public void onDetach() {
         super.onDetach();
-        Log.d(TAG,"onDetach");
+        Log.d(TAG, "onDetach");
     }
+
     @Override
-    public void onActivityResult( int requestCode, int resultCode, Intent intent) {
-        Log.d(TAG,"onActivityResult呼び出し");
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.d(TAG, "onActivityResult呼び出し");
         super.onActivityResult(requestCode, resultCode, intent);
-        if(resultCode == Activity.RESULT_OK && requestCode == RESULT_COLORSELECTACTIVITY){
+        if (resultCode == Activity.RESULT_OK && requestCode == RESULT_COLORSELECTACTIVITY) {
             //ColorSelectFragmentからの背景色を受け取る
             View view = getActivity().findViewById(R.id.fragment);
             int setColor = intent.getIntExtra(COLOR_KEY, 0);
@@ -174,6 +189,37 @@ public class LightFragment<BindService> extends Fragment {
             Editor editor = sharedPreferences.edit();
             editor.putInt(COLOR_KEY, setColor);
             editor.apply();
+        }
+    }
+
+
+    public void backgroundColorChange() {
+
+        Log.d(TAG, "backgroundColorChange");
+
+        View view = getActivity().findViewById(R.id.fragment);
+        Random random = new Random();
+        int randomValue = random.nextInt(4);
+        switch (randomValue) {
+            case 0:
+                view.setBackgroundColor(Color.RED);
+                Log.d(TAG, "赤点灯");
+                break;
+            case 1:
+                view.setBackgroundColor(Color.BLUE);
+                Log.d(TAG, "青点灯");
+                break;
+            case 2:
+                view.setBackgroundColor(Color.GREEN);
+                Log.d(TAG, "緑点灯");
+                break;
+            case 3:
+                view.setBackgroundColor(Color.WHITE);
+                Log.d(TAG, "白点灯");
+                break;
+            default:
+                Log.d(TAG, "error");
+
         }
     }
 }
